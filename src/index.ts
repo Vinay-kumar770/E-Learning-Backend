@@ -95,6 +95,7 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "https://e-learning-frontend-beta-pink.vercel.app/",
+  "https://e-learning-backend-lime.vercel.app/",
 ];
 app.use(
   cors({
