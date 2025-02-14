@@ -171,7 +171,9 @@ const connect = async () => {
       console.log("No mongoDB string defined");
     } else {
       console.log(MONGODB_URI);
-      await mongoose.connect(MONGODB_URI);
+      await mongoose.connect(MONGODB_URI, {
+        serverSelectionTimeoutMS: 20000,
+      });
       console.log("mongo connection successful");
     }
   } catch (error) {
