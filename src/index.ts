@@ -135,10 +135,10 @@ app.use(teacherRoutes);
 app.use(homeRoutes);
 app.use(courseRoutes);
 app.use(stripeRoute);
-app.use("/", (req, res) => {
-  res.json({ message: "working", MONGODB_URI });
-});
-app.get("/test", async (req: Request, res: Response): Promise<void> => {
+// app.use("/", (req, res) => {
+//   res.json({ message: "working", MONGODB_URI });
+// });
+app.use("/", async (req: Request, res: Response): Promise<void> => {
   try {
     const courses = await Course.find();
     console.log(courses);
