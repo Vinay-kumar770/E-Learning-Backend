@@ -18,6 +18,7 @@ import { config } from "./config/config";
 dotenv.config();
 
 const app: Application = express();
+app.use(express.json());
 const server = createServer(app);
 const io: SocketIOServer = new socketIo.Server(server);
 
@@ -29,62 +30,62 @@ const port = 8080;
 //   password: api_key.redisPassword
 // });
 
-io.on("connect", (socket) => {
-  socket.on("join", ({ UserName, room, userId }, callback) => {
-    console.log(UserName, room, userId);
-    let newUser = false;
-    let users = [{ id: [] as string[], names: [] as string[] }];
+// io.on("connect", (socket) => {
+//   socket.on("join", ({ UserName, room, userId }, callback) => {
+//     console.log(UserName, room, userId);
+//     let newUser = false;
+//     let users = [{ id: [] as string[], names: [] as string[] }];
 
-    // Redis logic (commented for now)
-    // if (client.exists(room)) {
-    //   client.lrange(room, 0, -1, (err, result) => {
-    //     if (err) {
-    //       callback(err);
-    //     } else {
-    //       const History: any[] = [];
-    //       result.forEach((user) => {
-    //         const parsedUser = JSON.parse(user);
-    //         History.push(parsedUser);
-    //         if (!users[0].id.includes(parsedUser.userId)) {
-    //           users[0].id.push(parsedUser.userId);
-    //           users[0].names.push(parsedUser.UserName);
-    //         }
-    //       });
+// Redis logic (commented for now)
+// if (client.exists(room)) {
+//   client.lrange(room, 0, -1, (err, result) => {
+//     if (err) {
+//       callback(err);
+//     } else {
+//       const History: any[] = [];
+//       result.forEach((user) => {
+//         const parsedUser = JSON.parse(user);
+//         History.push(parsedUser);
+//         if (!users[0].id.includes(parsedUser.userId)) {
+//           users[0].id.push(parsedUser.userId);
+//           users[0].names.push(parsedUser.UserName);
+//         }
+//       });
 
-    //       if (!users[0].id.includes(userId)) {
-    //         newUser = true;
-    //         users[0].id.push(userId);
-    //         users[0].names.push(UserName);
-    //       }
+//       if (!users[0].id.includes(userId)) {
+//         newUser = true;
+//         users[0].id.push(userId);
+//         users[0].names.push(UserName);
+//       }
 
-    //       socket.emit("history", { History, users: users[0].names });
-    //       socket.join(room);
-    //       io.to(room).emit("admin", {
-    //         users: users[0].names,
-    //         UserName: "admin",
-    //         newUser,
-    //         Message: newUser
-    //           ? `Welcome to the class ${UserName}!`
-    //           : `Welcome back to the class ${UserName}!`,
-    //       });
+//       socket.emit("history", { History, users: users[0].names });
+//       socket.join(room);
+//       io.to(room).emit("admin", {
+//         users: users[0].names,
+//         UserName: "admin",
+//         newUser,
+//         Message: newUser
+//           ? `Welcome to the class ${UserName}!`
+//           : `Welcome back to the class ${UserName}!`,
+//       });
 
-    //       socket.broadcast.to(room).emit("admin", {
-    //         users,
-    //         UserName: `${UserName}`,
-    //         newUser,
-    //         Message: `${UserName} has joined!`,
-    //       });
-    //     }
-    //   });
-    // }
+//       socket.broadcast.to(room).emit("admin", {
+//         users,
+//         UserName: `${UserName}`,
+//         newUser,
+//         Message: `${UserName} has joined!`,
+//       });
+//     }
+//   });
+// }
 
-    callback();
-  });
+//     callback();
+//   });
 
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-});
+//   socket.on("disconnect", () => {
+//     console.log("User disconnected");
+//   });
+// });
 
 app.use(bodyParser.json());
 
@@ -110,7 +111,7 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/videos", express.static(path.join(__dirname, "videos")));
 app.use("/Files", express.static(path.join(__dirname, "Files")));
@@ -138,7 +139,7 @@ app.use(stripeRoute);
 // app.use("/", (req, res) => {
 //   res.json({ message: "working", MONGODB_URI });
 // });
-app.use("/", async (req: Request, res: Response): Promise<void> => {
+app.get("/test", async (req: Request, res: Response): Promise<void> => {
   try {
     const courses = await Course.find();
     console.log(courses);
@@ -149,6 +150,19 @@ app.use("/", async (req: Request, res: Response): Promise<void> => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("products api running new deploy");
+});
+app.get("/ping", (req, res) => {
+  res.send("<=PONG=>");
+});
+app.get("/country", (req, res) => {
+  res.send("<=INDIA=>");
+});
+
+app.get("/ping", (req, res) => {
+  res.send("PONG");
+});
 const connect = async () => {
   try {
     if (!MONGODB_URI) {
