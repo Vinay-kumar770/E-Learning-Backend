@@ -138,7 +138,7 @@ app.use(stripeRoute);
 app.use("/", (req, res) => {
   res.json({ message: "working", MONGODB_URI });
 });
-app.use("/test", async (req: Request, res: Response): Promise<void> => {
+app.get("/test", async (req: Request, res: Response): Promise<void> => {
   try {
     const courses = await Course.find();
     console.log(courses);
