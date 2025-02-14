@@ -165,14 +165,16 @@ app.get("/country", (req, res) => {
 app.get("/ping", (req, res) => {
   res.send("PONG");
 });
-mongoose.set("bufferCommands", false);
+
 const connect = async () => {
   try {
     if (!MONGODB_URI) {
       console.log("No mongoDB string defined");
     } else {
       console.log(MONGODB_URI);
-      await mongoose.connect(MONGODB_URI);
+      await mongoose.connect(MONGODB_URI, {
+        bufferCommands: false,
+      });
       console.log("mongo connection successful");
     }
   } catch (error) {
