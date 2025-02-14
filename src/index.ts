@@ -136,7 +136,7 @@ app.use(homeRoutes);
 app.use(courseRoutes);
 app.use(stripeRoute);
 app.use("/", (req, res) => {
-  res.json({ message: "working" });
+  res.json({ message: "working", MONGODB_URI });
 });
 
 const connect = async () => {
