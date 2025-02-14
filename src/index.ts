@@ -1,7 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from "express";
 import { createServer } from "http";
 import path from "path";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
 import socketIo, { Server as SocketIOServer } from "socket.io";
 import bodyParser from "body-parser";
@@ -14,6 +13,8 @@ import homeRoutes from "./routes/homepage";
 import courseRoutes from "./routes/coursepage";
 import stripeRoute from "./routes/stripe";
 import { config } from "./config/config";
+import dotenv from "dotenv";
+dotenv.config;
 
 dotenv.config();
 
@@ -178,9 +179,10 @@ const connect = async () => {
   }
 };
 
-app.listen(port, () => {
-  console.log(`HTTP Server running on port ${port}`);
-  connect();
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🔍 Health check available at: http://localhost:${PORT}/`);
 });
 
 export default app;
