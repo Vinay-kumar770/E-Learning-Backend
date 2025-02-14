@@ -7,7 +7,7 @@ import socketIo, { Server as SocketIOServer } from "socket.io";
 import bodyParser from "body-parser";
 import cors from "cors";
 // import { RedisClient, createClient } from "redis";
-
+import Course from "./model/courses";
 import authRoutes from "./routes/auth";
 import teacherRoutes from "./routes/teacher";
 import homeRoutes from "./routes/homepage";
@@ -137,6 +137,16 @@ app.use(courseRoutes);
 app.use(stripeRoute);
 app.use("/", (req, res) => {
   res.json({ message: "working", MONGODB_URI });
+});
+app.use("/test", async (req: Request, res: Response): Promise<void> => {
+  try {
+    const courses = await Course.find();
+    console.log(courses);
+    res.status(200).json({ courses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 const connect = async () => {
