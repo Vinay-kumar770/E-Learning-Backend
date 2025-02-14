@@ -153,7 +153,7 @@ app.get("/test", async (req: Request, res: Response): Promise<void> => {
 });
 
 app.get("/", (req, res) => {
-  res.send("products api running new deploy");
+  res.json({ "products api running new deploy": MONGODB_URI });
 });
 app.get("/ping", (req, res) => {
   res.send("<=PONG=>");
