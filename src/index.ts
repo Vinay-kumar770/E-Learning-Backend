@@ -21,7 +21,7 @@ const app: Application = express();
 const server = createServer(app);
 const io: SocketIOServer = new socketIo.Server(server);
 
-const MONGODB_URI: string = config.mongoDatabase;
+const MONGODB_URI: string = config.mongoDatabase as string;
 const port = 8080;
 // const client: RedisClient = createClient({
 //   host: api_key.redisHost,

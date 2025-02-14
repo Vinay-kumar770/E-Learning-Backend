@@ -4,7 +4,10 @@ dotenv.config();
 
 export const config = {
   sendgridKey: process.env.SENDGRID_KEY || "",
-  mongoDatabase: process.env.MONGO_DATABASE || "",
+  mongoDatabase:
+    process.env.NODE_ENV === "production"
+      ? process.env.MONGODB_URI
+      : process.env.MONGO_DATABASE || "",
 
   jwt: {
     accessToken: process.env.ACCESS_TOKEN_SECRET || "",
