@@ -23,7 +23,7 @@ const server = createServer(app);
 const io: SocketIOServer = new socketIo.Server(server);
 
 const MONGODB_URI: string = config.mongoDatabase as string;
-const port = 8080;
+const port = 5001;
 // const client: RedisClient = createClient({
 //   host: api_key.redisHost,
 //   port: api_key.redisPort,
