@@ -185,6 +185,7 @@ const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`🔍 Health check available at: http://localhost:${PORT}/`);
+  connect();
 });
 
 export default app;
